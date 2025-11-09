@@ -11,8 +11,17 @@ struct DetailScreen: View {
     
     @Environment(\.showError) private var showError
     var body: some View {
-        Button("Throw Error from DetailScreen") {
-            showError(SampleError.operationFailed, "Details Screen Error")
+        VStack(spacing: 20) {
+            Text("Sheet Content")
+                .font(.largeTitle)
+            
+            Button {
+                showError(SampleError.operationFailed, "Sheet Error Demo")
+            } label: {
+                Text("Trigger Error from Sheet")
+            }
+            
+            Spacer()
         }
     }
 }

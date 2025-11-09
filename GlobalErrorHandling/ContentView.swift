@@ -82,28 +82,18 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSheet) {
             NavigationStack {
-                VStack(spacing: 20) {
-                    Text("Sheet Content")
-                        .font(.largeTitle)
-                    
-                    Button {
-                        showError(SampleError.operationFailed, "Sheet Error Demo")
-                    } label: {
-                        Text("Trigger Error from Sheet")
-                    }
-                    
-                    Spacer()
-                }
-                .navigationTitle("Sheet View")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Done") {
-                            showingSheet = false
+                DetailScreen()
+                    .withErrorView()
+                    .navigationTitle("Sheet View")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") {
+                                showingSheet = false
+                            }
                         }
                     }
-                }
-                .padding()
+                    .padding()
             }
             .presentationDetents([.medium, .large])
         }
@@ -120,21 +110,25 @@ struct ContentViewContainer: View {
         NavigationStack {
             ContentView()
         }
-        .environment(\.showError, ShowErrorAction(action: showError))
-        .overlay(alignment: .bottom) {
-            errorWrapper != nil ? ErrorView(errorWrapper: $errorWrapper) : nil
-        }        /*
+        .withErrorView()
+        /*
+         
+         .environment(\.showError, ShowErrorAction(action: showError))
+         .overlay(alignment: .bottom) {
+         errorWrapper != nil ? ErrorView(errorWrapper: $errorWrapper) : nil
+         }
+         */
+        /*
          .sheet(item: $errorWrapper) { errorWrapper in
-             ErrorView(errorWrapper: errorWrapper)
+         ErrorView(errorWrapper: errorWrapper)
          }
          */
         
-        
     }
     
-    private func showError( error: Error, guidence: String) {
-        errorWrapper = ErrorWrapper(error: error, guidance: guidence)
-    }
+//    private func showError( error: Error, guidence: String) {
+//        errorWrapper = ErrorWrapper(error: error, guidance: guidence)
+//    }
 }
 
 #Preview {

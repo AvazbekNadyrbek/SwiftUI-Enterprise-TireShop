@@ -17,17 +17,22 @@ struct GlobalErrorHandlingApp: App {
         WindowGroup {
             NavigationStack {
                 ContentView()
-            }.environment(\.showError, ShowErrorAction(action: showError))
+            }
+            .withErrorView()
+            /*
+            .environment(\.showError, ShowErrorAction(action: showError))
                 .overlay(alignment: .bottom) {
                     errorWrapper != nil ? ErrorView(errorWrapper: $errorWrapper) :  nil
                 }
 //            .sheet(item: $errorWrapper) { errorWrapper in
 //                    Text(errorWrapper.guidance)
 //            }
+             */
         }
     }
-    
+    /*
     private func showError( error: Error, guidence: String) {
         errorWrapper = ErrorWrapper(error: error, guidance: guidence)
     }
+     */
 }
