@@ -1,0 +1,59 @@
+//
+//  FatherTireShopApp.swift
+//  GlobalErrorHandling
+//
+//  Created by Авазбек Надырбек уулу on 29.10.25.
+//
+
+import SwiftUI
+import OpenAPIURLSession
+import OpenAPIRuntime
+
+@main
+struct FatherTireShopApp: App {
+    
+    // MARK: - State
+    
+    @StateObject private var authViewModel: AuthViewModel
+    
+    // MARK: - Initialization
+    
+    init() {
+        // Создаём клиент один раз и передаём в AuthViewModel
+        let client = ClientFactory.createClient()
+        _authViewModel = StateObject(wrappedValue: AuthViewModel(client: client))
+    }
+    
+    // MARK: - Body
+    
+    var body: some Scene {
+        WindowGroup {
+            RootView()
+                .environmentObject(authViewModel)
+                .modifier(ErrorModifier()) // 👈 Глобальный обработчик ошибок
+        }
+    }
+    
+//    // MARK: - Client Factory
+//    
+//    /// Создаёт настроенный API клиент с Middleware
+//    static func createClient() -> Client {
+//        #if targetEnvironment(simulator)
+//        // На симуляторе используем localhost
+//        let url = URL(string: "http://localhost:8080")!
+//        #else
+//        // На реальном устройстве используй IP твоего Mac
+//        // Узнай свой IP: ifconfig | grep "inet " | grep -v 127.0.0.1
+//        let url = URL(string: "http://192.168.1.100:8080")! // 👈 Замени на свой IP
+//        #endif
+//        
+//        let transport = URLSessionTransport()
+//        let middleware = AuthenticationMiddleware()
+//        
+//        return Client(
+//            serverURL: url,
+//            transport: transport,
+//            middlewares: [middleware]
+//        )
+//    }
+}

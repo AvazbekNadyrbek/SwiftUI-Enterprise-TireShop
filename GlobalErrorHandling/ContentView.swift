@@ -6,133 +6,107 @@
 //
 
 import SwiftUI
+import OpenAPIURLSession
+import OpenAPIRuntime
 
 struct ContentView: View {
     
+    // 1. "Ловим" AuthViewModel из окружения, чтобы работала кнопка Выйти
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
+    // 2. Создаем ViewModel для загрузки данных (услуг)
+    @StateObject private var viewModel = ServicesViewModel()
+    
+    // 3. Получаем функцию showError из environment
     @Environment(\.showError) private var showError
-    @State private var showingSheet = false
-    @State private var showingPopover = false
     
-    var body: some View {
-        VStack {
-            Button {
-                showError(SampleError.operationFailed, "Show error")
-            } label: {
-                Text("Show Error")
-            }
-            
-            NavigationLink("Details Screen") {
-                DetailScreen()
-            }
-            
-        }
-        .navigationTitle("ContentView")
-        .toolbar {
-            // Multiple toolbar items - modern approach
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button {
-                    showingPopover = true
-                } label: {
-                    Image(systemName: "info.circle")
-                }
-                .popover(isPresented: $showingPopover) {
-                    VStack(spacing: 16) {
-                        Text("App Information")
-                            .font(.headline)
-                        Text("This demonstrates global error handling")
-                            .multilineTextAlignment(.center)
-                        Button("Dismiss") {
-                            showingPopover = false
-                        }
-                    }
-                    .padding()
-                    .presentationCompactAdaptation(.sheet)
-                }
-                
-                Button {
-                    showingSheet = true
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                }
-            }
-            
-            // Leading toolbar item
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    showError(SampleError.operationFailed, "Toolbar Error Demo")
-                } label: {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
-                }
-            }
-            
-            // Principal (center) toolbar item - great for important actions
-            ToolbarItem(placement: .principal) {
-                Button {
-                    showError(SampleError.operationFailed, "Center action triggered")
-                } label: {
-                    HStack {
-                        Image(systemName: "arrow.clockwise")
-                        Text("Refresh")
-                    }
-                    .font(.headline)
-                    .foregroundStyle(.blue)
-                }
-            }
-        }
-        .sheet(isPresented: $showingSheet) {
-            NavigationStack {
-                DetailScreen()
-                    .withErrorView()
-                    .navigationTitle("Sheet View")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Done") {
-                                showingSheet = false
-                            }
-                        }
-                    }
-                    .padding()
-            }
-            .presentationDetents([.medium, .large])
-        }
-        .padding()
-    }
-}
-
-// ContentViewContainer is only created so our Previews can work
-struct ContentViewContainer: View {
-    
-    @State private var errorWrapper: ErrorWrapper?
+    // 4. Флаг для отслеживания первой загрузки
+    @State private var hasLoadedOnce = false
     
     var body: some View {
         NavigationStack {
-            ContentView()
+            VStack(spacing: 0) {
+                // Контент
+                Group {
+                    if viewModel.isLoading && !hasLoadedOnce {
+                        // Показываем спиннер только при первой загрузке
+                        VStack {
+                            Spacer()
+                            ProgressView("Загрузка прайса...")
+                            Spacer()
+                        }
+                    } else if viewModel.services.isEmpty && !viewModel.isLoading {
+                        // Пустой список
+                        ContentUnavailableView(
+                            "Нет услуг",
+                            systemImage: "list.bullet.clipboard",
+                            description: Text("Список услуг пуст или сервер недоступен")
+                        )
+                    } else {
+                        // СПИСОК УСЛУГ
+                        List(viewModel.services, id: \.id) { service in
+                            ServiceRowView(service: service)
+                        }
+                        .listStyle(.plain)
+                        .refreshable {
+                            await refreshServices()
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Прайс-лист")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        Task {
+                            await refreshServices()
+                        }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .disabled(viewModel.isLoading)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        authViewModel.logout()
+                    }) {
+                        HStack {
+                            Text("Выйти")
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                        }
+                        .foregroundColor(.red)
+                    }
+                }
+            }
+            .task {
+                guard !hasLoadedOnce else { return }
+                
+                // Устанавливаем обработчик ошибок ДО загрузки
+                viewModel.setErrorHandler { apiError in
+                    showError(apiError, apiError.recoverySuggestion ?? "Попробуйте снова")
+                }
+                
+                await loadInitialData()
+            }
         }
-        .withErrorView()
-        /*
-         
-         .environment(\.showError, ShowErrorAction(action: showError))
-         .overlay(alignment: .bottom) {
-         errorWrapper != nil ? ErrorView(errorWrapper: $errorWrapper) : nil
-         }
-         */
-        /*
-         .sheet(item: $errorWrapper) { errorWrapper in
-         ErrorView(errorWrapper: errorWrapper)
-         }
-         */
-        
     }
     
-//    private func showError( error: Error, guidence: String) {
-//        errorWrapper = ErrorWrapper(error: error, guidance: guidence)
-//    }
+    // MARK: - Private Methods
+    
+    /// Загружает данные при первом отображении экрана
+    private func loadInitialData() async {
+        await viewModel.loadServices()
+        hasLoadedOnce = true
+    }
+    
+    /// Обновляет список услуг (для pull-to-refresh и кнопки обновления)
+    private func refreshServices() async {
+        await viewModel.refresh()
+    }
 }
 
+// Для превью
 #Preview {
-    
-    ContentViewContainer()
-    
+    ContentView()
+        .environmentObject(AuthViewModel()) // Обязательно для превью!
 }

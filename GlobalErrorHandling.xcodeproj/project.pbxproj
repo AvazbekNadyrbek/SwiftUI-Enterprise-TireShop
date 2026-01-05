@@ -6,13 +6,31 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4B1DE49B2F0C65EE009FDE8A /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 4B1DE49A2F0C65EE009FDE8A /* OpenAPIRuntime */; };
+		4B1DE49F2F0C6618009FDE8A /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = 4B1DE49E2F0C6618009FDE8A /* OpenAPIURLSession */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4BC4BF1F2EB1B02000AB7AAD /* GlobalErrorHandling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlobalErrorHandling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4B9C0C582F0B0E8400BB84EA /* Exceptions for "GlobalErrorHandling" folder in "GlobalErrorHandling" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4BC4BF1E2EB1B02000AB7AAD /* GlobalErrorHandling */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4BC4BF212EB1B02000AB7AAD /* GlobalErrorHandling */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4B9C0C582F0B0E8400BB84EA /* Exceptions for "GlobalErrorHandling" folder in "GlobalErrorHandling" target */,
+			);
 			path = GlobalErrorHandling;
 			sourceTree = "<group>";
 		};
@@ -23,16 +41,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B1DE49F2F0C6618009FDE8A /* OpenAPIURLSession in Frameworks */,
+				4B1DE49B2F0C65EE009FDE8A /* OpenAPIRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B1DE4972F0C65B0009FDE8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4BC4BF162EB1B02000AB7AAD = {
 			isa = PBXGroup;
 			children = (
 				4BC4BF212EB1B02000AB7AAD /* GlobalErrorHandling */,
+				4B1DE4972F0C65B0009FDE8A /* Frameworks */,
 				4BC4BF202EB1B02000AB7AAD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,12 +87,15 @@
 			buildRules = (
 			);
 			dependencies = (
+				4B1DE4A42F0C686C009FDE8A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				4BC4BF212EB1B02000AB7AAD /* GlobalErrorHandling */,
 			);
 			name = GlobalErrorHandling;
 			packageProductDependencies = (
+				4B1DE49A2F0C65EE009FDE8A /* OpenAPIRuntime */,
+				4B1DE49E2F0C6618009FDE8A /* OpenAPIURLSession */,
 			);
 			productName = GlobalErrorHandling;
 			productReference = 4BC4BF1F2EB1B02000AB7AAD /* GlobalErrorHandling.app */;
@@ -78,7 +109,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					4BC4BF1E2EB1B02000AB7AAD = {
 						CreatedOnToolsVersion = 26.0;
@@ -94,6 +125,11 @@
 			);
 			mainGroup = 4BC4BF162EB1B02000AB7AAD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4B9C0C492F0B0D4600BB84EA /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
+				4B1DE4992F0C65EE009FDE8A /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
+				4B1DE49D2F0C6618009FDE8A /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4BC4BF202EB1B02000AB7AAD /* Products */;
 			projectDirPath = "";
@@ -123,6 +159,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4B1DE4A42F0C686C009FDE8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4B1DE4A32F0C686C009FDE8A /* OpenAPIGenerator */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4BC4BF282EB1B02100AB7AAD /* Debug */ = {
@@ -184,6 +227,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -241,6 +285,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -256,6 +301,8 @@
 				DEVELOPMENT_TEAM = KKJFR977W3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GlobalErrorHandling/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -269,7 +316,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = avazbek.GlobalErrorHandling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
@@ -288,6 +335,8 @@
 				DEVELOPMENT_TEAM = KKJFR977W3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GlobalErrorHandling/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -301,7 +350,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = avazbek.GlobalErrorHandling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
@@ -332,6 +381,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4B1DE4992F0C65EE009FDE8A /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+		4B1DE49D2F0C6618009FDE8A /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+		4B9C0C492F0B0D4600BB84EA /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-generator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B1DE49A2F0C65EE009FDE8A /* OpenAPIRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B1DE4992F0C65EE009FDE8A /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */;
+			productName = OpenAPIRuntime;
+		};
+		4B1DE49E2F0C6618009FDE8A /* OpenAPIURLSession */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B1DE49D2F0C6618009FDE8A /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
+			productName = OpenAPIURLSession;
+		};
+		4B1DE4A32F0C686C009FDE8A /* OpenAPIGenerator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B9C0C492F0B0D4600BB84EA /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
+			productName = "plugin:OpenAPIGenerator";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4BC4BF172EB1B02000AB7AAD /* Project object */;
 }
