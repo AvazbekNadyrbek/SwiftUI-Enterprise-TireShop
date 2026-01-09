@@ -79,6 +79,11 @@
 | **Error Handling** | Custom Error Types, Global Error Handling |
 
 ## 📱 Screenshots
+<img width="450" height="902" alt="Screenshot 2026-01-09 at 12 11 19" src="https://github.com/user-attachments/assets/6f29d15e-b17b-42bc-881d-48a9d144e740" />
+<img width="438" height="893" alt="Screenshot 2026-01-09 at 12 11 47" src="https://github.com/user-attachments/assets/f627be8b-abcb-4fbe-8bde-855ca32a88e7" />
+<img width="473" height="876" alt="Screenshot 2026-01-09 at 12 12 05" src="https://github.com/user-attachments/assets/8aa070ff-d75d-40c8-a654-8fb9cac05c65" />
+<img width="475" height="894" alt="Screenshot 2026-01-09 at 12 12 21" src="https://github.com/user-attachments/assets/1c1ea75e-7c9b-4f62-b2a0-9676521a22b3" />
+<img width="455" height="893" alt="Screenshot 2026-01-09 at 12 12 42" src="https://github.com/user-attachments/assets/677575d4-8ae2-4901-8beb-245040c9eb3a" />
 
 ### Admin Dashboard
 - Real-time appointment overview
